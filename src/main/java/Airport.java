@@ -114,18 +114,19 @@ public class Airport {
 
     //TODO Получить ближайший рейс в указанную пользователем точку прибытия
     public Flight findFirstFlightToSpecifiedPlaceArrival(String namePlaceForArrival) {
-        Set<Flight> setFlightsArrival = new TreeSet<>();
+        Set<Flight> setFlightsDeparture = new TreeSet<>();
         for (LaneForAircraft currentLaneForAircraft : listLanesForAircraft) {
             for (Flight currentFlight : currentLaneForAircraft.getListFlights()) {
-                if (currentFlight.getTimeArrival().isAfter(LocalDateTime.now()) &&
-                        currentFlight.getTypeFlight().equals(TypeFlight.ARRIVAL) &&
-                            currentFlight.getPlaceForArrival().equals(namePlaceForArrival)) {
-                    setFlightsArrival.add(currentFlight);
+                if (((currentFlight.getTimeDeparture().isAfter(LocalDateTime.now())) ||
+                        (currentFlight.getTimeDeparture().isEqual(LocalDateTime.now()))) &&
+                                (currentFlight.getTypeFlight().equals(TypeFlight.DEPARTURE)) &&
+                                    (currentFlight.getPlaceForArrival().equals(namePlaceForArrival))) {
+                    setFlightsDeparture.add(currentFlight);
                 }
             }
         }
 
-        for (Flight currentFlight : setFlightsArrival) {
+        for (Flight currentFlight : setFlightsDeparture) {
             return currentFlight;
         }
         return null;

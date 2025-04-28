@@ -28,7 +28,5 @@ public class Main {
                 "\"Москва/ШРМ\", \"МОСКВА/ДМД\", \"Санкт-Петербург/Пулково\"): ");
         String namePlaceForArrival = new Scanner(System.in).nextLine();
         System.out.println(airport.findFirstFlightToSpecifiedPlaceArrival(namePlaceForArrival));
-
-        System.out.println("Все полёты: " + airport.getListFlights());
     }
 }
