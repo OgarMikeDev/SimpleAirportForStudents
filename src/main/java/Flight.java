@@ -1,6 +1,7 @@
 import java.time.LocalDateTime;
+import java.util.Objects;
 
-public class Flight {
+public class Flight implements Comparable<Flight> {
     private Aircraft aircraft; //TODO Aeroflot-Russian Airlines PJSC
     private TypeFlight typeFlight; //TODO ARRIVAL
     private LocalDateTime timeDeparture; //TODO 20:30
@@ -90,6 +91,23 @@ public class Flight {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Flight flight = (Flight) o;
+        return exit == flight.exit && Objects.equals(aircraft, flight.aircraft) && typeFlight == flight.typeFlight && Objects.equals(timeDeparture, flight.timeDeparture) && Objects.equals(timeArrival, flight.timeArrival) && Objects.equals(numberFlight, flight.numberFlight) && Objects.equals(placeForArrival, flight.placeForArrival) && Objects.equals(status, flight.status);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(aircraft, typeFlight, timeDeparture, timeArrival, numberFlight, placeForArrival, status, exit);
+    }
+
+    @Override
+    public int compareTo(Flight flight) {
+        return 0;
+    }
+
+    @Override
     public String toString() {
         return "Flight{" +
                 "aircraft=" + aircraft +
@@ -102,4 +120,5 @@ public class Flight {
                 ", exit=" + exit +
                 '}';
     }
+
 }

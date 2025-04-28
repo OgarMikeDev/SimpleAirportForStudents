@@ -5,7 +5,7 @@ public class Main {
         System.out.println("Вас приветствует Международный аэропорт Сочи имени В. И. Севастьянова :) ");
         String nameAirport = "Международный аэропорт Сочи имени В. И. Севастьянова";
         Airport airport = new Airport(nameAirport);
-        System.out.println("Выберите цифру одной из предложенных моделей самолётов -\n" +
+        System.out.println("\nВыберите цифру одной из предложенных моделей самолётов -\n" +
                 "1) Boeing_777_300ER,\n" +
                 "2) Boeing_737_800,\n" +
                 "3) Airbus_A350_900,\n" +
@@ -20,10 +20,12 @@ public class Main {
                 AircraftModels.values()[numberAircraftModel - 1] +
                 "\" равно " + airport.findCountAircraftWithNumberSpecifiedModel(numberAircraftModel));
 
-        System.out.println("Map с количеством припаркованных самолетов на каждой полосе: " +
+        System.out.println("\nMap с количеством припаркованных самолетов на каждой полосе: " +
                 airport.findMapCountParkedAircraftByTerminalName());
 
-        System.out.println("Список всех линий: " + airport.getListLanesForAircraft());
-
+        System.out.println("\nВведите название полосы для самолёта,\n" +
+                "чтобы мы вернули ближайший прилет на неё: ");
+        String nameLaneForAircraft = new Scanner(System.in).nextLine();
+        System.out.println(airport.findFirstFlightArrivalToSpecifiedLaneForAircraft(nameLaneForAircraft));
     }
 }

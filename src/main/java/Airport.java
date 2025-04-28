@@ -1,8 +1,5 @@
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class Airport {
     private String nameAirport;
@@ -115,6 +112,23 @@ public class Airport {
     }
 
     //TODO Найти ближайший прилет в указанный терминал.
+    public Flight findFirstFlightArrivalToSpecifiedLaneForAircraft(String nameLaneForAircraft) {
+        Set<Flight> setFlightsArrival = new TreeSet<>();
+        for (LaneForAircraft currentLaneForAircraft : listLanesForAircraft) {
+            for (Flight currentFlight : currentLaneForAircraft.getListFlights()) {
+                if (currentFlight.getTypeFlight().equals(TypeFlight.ARRIVAL) &&
+                        currentLaneForAircraft.getNameLaneForAircraft().equals(nameLaneForAircraft) &&
+                            currentFlight.getTimeArrival().isAfter(LocalDateTime.now())) {
+                    setFlightsArrival.add(currentFlight);
+                }
+            }
+        }
+
+        for (Flight currentFlight : setFlightsArrival) {
+            return currentFlight;
+        }
+        return null;
+    }
 
     public String getNameAirport() {
         return nameAirport;
