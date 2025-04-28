@@ -2,9 +2,8 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Напишите название аэропорта: ");
-        //Международный аэропорт Сочи имени В. И. Севастьянова
-        String nameAirport = new Scanner(System.in).nextLine();
+        System.out.println("Вас приветствует Международный аэропорт Сочи имени В. И. Севастьянова :) ");
+        String nameAirport = "Международный аэропорт Сочи имени В. И. Севастьянова";
         Airport airport = new Airport(nameAirport);
         System.out.println("Выберите цифру одной из предложенных моделей самолётов -\n" +
                 "1) Boeing_777_300ER,\n" +
