@@ -27,7 +27,7 @@ public class Airport {
         AircraftModels randomAircraftModel = arrayAircraftModels[randomNumberForAircraftModel];
         double randomAircraftLength = 20 + (int) (Math.random() * 57);
         int randomCruisingSpeed = 200 + (int) (Math.random() * 801);
-        double randomMaxHeightFlight = 10 + (int) (Math.random() * 6);
+        double randomMaxHeightFlight = (double) ((int) ((10 + (double) (Math.random() * 6)) * 10)) / 10.0;
         int randomMaxRangeFlight = 1_000 + (int) (Math.random() * 14_001);
         int randomCountBusinessSpaces = 8 + (int) (Math.random() * 21);
         int randomCountEconomySpaces = 100 + (int) (Math.random() * 201);
@@ -85,8 +85,8 @@ public class Airport {
         return listLanesForAircraft;
     }
 
+    //TODO Метод должен вернуть словарь с количеством припаркованных самолетов на каждой полосе.
     public Map<String, Integer> findMapCountParkedAircraftByTerminalName() {
-        //TODO Метод должен вернуть словарь с количеством припаркованных самолетов на каждой полосе.
         Map<String, Integer> mapCountParkedAircraftByTerminalName = new TreeMap<>();
 
         for (LaneForAircraft currentLaneForAircraft : listLanesForAircraft) {
@@ -98,6 +98,7 @@ public class Airport {
         return mapCountParkedAircraftByTerminalName;
     }
 
+    //TODO Получить кол-во самолётов с номером указанной модели
     public int findCountAircraftWithNumberSpecifiedModel(int numberSpecifiedModelAircraft) {
         int countAircraft = 0;
 
@@ -111,14 +112,14 @@ public class Airport {
         return countAircraft;
     }
 
-    //TODO Найти ближайший прилет в указанный терминал.
-    public Flight findFirstFlightArrivalToSpecifiedLaneForAircraft(String nameLaneForAircraft) {
+    //TODO Получить ближайший рейс в указанную пользователем точку прибытия
+    public Flight findFirstFlightToSpecifiedPlaceArrival(String namePlaceForArrival) {
         Set<Flight> setFlightsArrival = new TreeSet<>();
         for (LaneForAircraft currentLaneForAircraft : listLanesForAircraft) {
             for (Flight currentFlight : currentLaneForAircraft.getListFlights()) {
-                if (currentFlight.getTypeFlight().equals(TypeFlight.ARRIVAL) &&
-                        currentLaneForAircraft.getNameLaneForAircraft().equals(nameLaneForAircraft) &&
-                            currentFlight.getTimeArrival().isAfter(LocalDateTime.now())) {
+                if (currentFlight.getTimeArrival().isAfter(LocalDateTime.now()) &&
+                        currentFlight.getTypeFlight().equals(TypeFlight.ARRIVAL) &&
+                            currentFlight.getPlaceForArrival().equals(namePlaceForArrival)) {
                     setFlightsArrival.add(currentFlight);
                 }
             }
@@ -129,6 +130,8 @@ public class Airport {
         }
         return null;
     }
+
+    //TODO Метод должен вернуть список отправляющихся рейсов в ближайшее количество часов.
 
     public String getNameAirport() {
         return nameAirport;

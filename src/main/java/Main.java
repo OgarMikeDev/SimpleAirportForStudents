@@ -23,9 +23,12 @@ public class Main {
         System.out.println("\nMap с количеством припаркованных самолетов на каждой полосе: " +
                 airport.findMapCountParkedAircraftByTerminalName());
 
-        System.out.println("\nВведите название полосы для самолёта,\n" +
-                "чтобы мы вернули ближайший прилет на неё: ");
-        String nameLaneForAircraft = new Scanner(System.in).nextLine();
-        System.out.println(airport.findFirstFlightArrivalToSpecifiedLaneForAircraft(nameLaneForAircraft));
+        System.out.println("\nНапишите название точки прибытия,\n" +
+                "чтобы мы вернули ближайший прилет на неё\n(" +
+                "\"Москва/ШРМ\", \"МОСКВА/ДМД\", \"Санкт-Петербург/Пулково\"): ");
+        String namePlaceForArrival = new Scanner(System.in).nextLine();
+        System.out.println(airport.findFirstFlightToSpecifiedPlaceArrival(namePlaceForArrival));
+
+        System.out.println("Все полёты: " + airport.getListFlights());
     }
 }
