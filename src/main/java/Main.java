@@ -19,8 +19,11 @@ public class Main {
         System.out.println("Кол-во самолётов \"" +
                 AircraftModels.values()[numberAircraftModel - 1] +
                 "\" равно " + airport.findCountAircraftWithNumberSpecifiedModel(numberAircraftModel));
+
         System.out.println("Map с количеством припаркованных самолетов на каждой полосе: " +
                 airport.findMapCountParkedAircraftByTerminalName());
+
+        System.out.println("Список всех линий: " + airport.getListLanesForAircraft());
 
     }
 }
