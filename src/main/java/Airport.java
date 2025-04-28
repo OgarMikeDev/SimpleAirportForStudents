@@ -7,11 +7,13 @@ public class Airport {
     private String nameAirport;
     private List<Aircraft> listAircraft;
     private List<LaneForAircraft> listLanesForAircraft;
+    private Map<String, Integer> mapCountParkedAircraftByTerminalName;
 
     public Airport(String nameAirport) {
         this.nameAirport = nameAirport;
         listAircraft = new ArrayList<>();
         listLanesForAircraft = new ArrayList<>();
+        mapCountParkedAircraftByTerminalName = new TreeMap<>();
         for (int i = 0; i < 160; i++) {
             generateAircraft();
         }
@@ -50,6 +52,7 @@ public class Airport {
                     currentLaneForAircraft.getNameLaneForAircraft(),
                     currentLaneForAircraft.getListParkedAircraft().size());
         }
+        this.mapCountParkedAircraftByTerminalName = mapCountParkedAircraftByTerminalName;
         return mapCountParkedAircraftByTerminalName;
     }
 
@@ -80,6 +83,8 @@ public class Airport {
 
         return countAircraft;
     }
+
+    //TODO Найти ближайший прилет в указанный терминал.
 
     public String getNameAirport() {
         return nameAirport;
