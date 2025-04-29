@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -7,6 +8,7 @@ public class Airport {
     private List<LaneForAircraft> listLanesForAircraft;
     private List<Flight> listFlights;
     private Map<String, Integer> mapCountParkedAircraftByTerminalName;
+    private Set<Flight> setSortedFlightsDeparture;
 
     public Airport(String nameAirport) {
         this.nameAirport = nameAirport;
@@ -14,6 +16,7 @@ public class Airport {
         listLanesForAircraft = new ArrayList<>();
         mapCountParkedAircraftByTerminalName = new TreeMap<>();
         listFlights = new ArrayList<>();
+        setSortedFlightsDeparture = new TreeSet<>();
         for (int i = 0; i < 160; i++) {
             createAircraft();
         }
@@ -50,7 +53,10 @@ public class Airport {
         TypeFlight typeFlight = TypeFlight.values()[randomNumberForTypeFlight];
         int randomHour = (int) (Math.random() * 24);
         int randomMinute = (int) (Math.random() * 60);
-        LocalDateTime timeDeparture = LocalDateTime.of(2025, 4, 28, randomHour, randomMinute);
+        LocalDate localDateNow = LocalDate.now();
+        LocalDateTime timeDeparture = LocalDateTime.of(
+                localDateNow.getYear(), localDateNow.getMonth(), localDateNow.getDayOfMonth(),
+                randomHour, randomMinute);
         LocalDateTime timeArrival = timeDeparture.plusHours(2);
         String[] randomNumbersFlights = {"SU-1177", "SU-2831", "SU-1133"};
         String randomNumberFlight = randomNumbersFlights[(int) (Math.random() * 3)];
@@ -70,7 +76,6 @@ public class Airport {
     }
 
     public List<LaneForAircraft> createLanesForAircraft() {
-        List<LaneForAircraft> listLanesForAircraft = new ArrayList<>();
         String[] arrayNameLanesForAircraft = {"A", "B", "C", "D"};
         for (String currentNameLaneForAircraft : arrayNameLanesForAircraft) {
             LaneForAircraft currentLaneForAircraft = new LaneForAircraft(currentNameLaneForAircraft);
@@ -81,24 +86,26 @@ public class Airport {
             }
             listLanesForAircraft.add(currentLaneForAircraft);
         }
-        this.listLanesForAircraft = listLanesForAircraft;
         return listLanesForAircraft;
     }
 
-    //TODO Метод должен вернуть словарь с количеством припаркованных самолетов на каждой полосе.
+    /*
+    TODO Метод должен найти
+     количество припаркованных самолетов на каждой полосе
+     и вернуть такой Map
+     */
     public Map<String, Integer> findMapCountParkedAircraftByTerminalName() {
-        Map<String, Integer> mapCountParkedAircraftByTerminalName = new TreeMap<>();
-
         for (LaneForAircraft currentLaneForAircraft : listLanesForAircraft) {
             mapCountParkedAircraftByTerminalName.put(
                     currentLaneForAircraft.getNameLaneForAircraft(),
                     currentLaneForAircraft.getListParkedAircraft().size());
         }
-        this.mapCountParkedAircraftByTerminalName = mapCountParkedAircraftByTerminalName;
         return mapCountParkedAircraftByTerminalName;
     }
 
-    //TODO Получить кол-во самолётов с номером указанной модели
+    /*
+    TODO Найти кол-во самолётов с номером указанной модели
+     */
     public int findCountAircraftWithNumberSpecifiedModel(int numberSpecifiedModelAircraft) {
         int countAircraft = 0;
 
@@ -112,27 +119,35 @@ public class Airport {
         return countAircraft;
     }
 
-    //TODO Получить ближайший рейс в указанную пользователем точку прибытия
+    /*
+    TODO Найти ближайший рейс в указанную пользователем точку прибытия
+     */
     public Flight findFirstFlightToSpecifiedPlaceArrival(String namePlaceForArrival) {
-        Set<Flight> setFlightsDeparture = new TreeSet<>();
         for (LaneForAircraft currentLaneForAircraft : listLanesForAircraft) {
             for (Flight currentFlight : currentLaneForAircraft.getListFlights()) {
                 if (((currentFlight.getTimeDeparture().isAfter(LocalDateTime.now())) ||
                         (currentFlight.getTimeDeparture().isEqual(LocalDateTime.now()))) &&
                                 (currentFlight.getTypeFlight().equals(TypeFlight.DEPARTURE)) &&
                                     (currentFlight.getPlaceForArrival().equals(namePlaceForArrival))) {
-                    setFlightsDeparture.add(currentFlight);
+                    setSortedFlightsDeparture.add(currentFlight);
                 }
             }
         }
 
-        for (Flight currentFlight : setFlightsDeparture) {
+        for (Flight currentFlight : setSortedFlightsDeparture) {
             return currentFlight;
         }
         return null;
     }
 
-    //TODO Метод должен вернуть список отправляющихся рейсов в ближайшее количество часов.
+    /*
+    TODO Метод должен найти и вернуть список отправляющихся рейсов
+     в ближайшее количество часов,
+     в указанное место.
+     */
+    public void findListFlightsDepartureInNextCountHours(int countHours) {
+
+    }
 
     public String getNameAirport() {
         return nameAirport;
@@ -154,11 +169,19 @@ public class Airport {
         return mapCountParkedAircraftByTerminalName;
     }
 
+    public Set<Flight> getSetSortedFlightsDeparture() {
+        return setSortedFlightsDeparture;
+    }
+
     @Override
     public String toString() {
         return "Airport{" +
                 "nameAirport='" + nameAirport + '\'' +
                 ", listAircraft=" + listAircraft +
+                ", listLanesForAircraft=" + listLanesForAircraft +
+                ", listFlights=" + listFlights +
+                ", mapCountParkedAircraftByTerminalName=" + mapCountParkedAircraftByTerminalName +
+                ", setSortedFlightsDeparture=" + setSortedFlightsDeparture +
                 '}';
     }
 }
