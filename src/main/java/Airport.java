@@ -123,12 +123,14 @@ public class Airport {
     TODO Найти ближайший рейс в указанную пользователем точку прибытия
      */
     public Flight findFirstFlightToSpecifiedPlaceArrival(String namePlaceForArrival) {
+        setSortedFlightsDeparture = new TreeSet<>();
         for (LaneForAircraft currentLaneForAircraft : listLanesForAircraft) {
             for (Flight currentFlight : currentLaneForAircraft.getListFlights()) {
                 if (((currentFlight.getTimeDeparture().isAfter(LocalDateTime.now())) ||
                         (currentFlight.getTimeDeparture().isEqual(LocalDateTime.now()))) &&
                         (currentFlight.getTypeFlight().equals(TypeFlight.DEPARTURE)) &&
                         (currentFlight.getPlaceForArrival().equals(namePlaceForArrival))) {
+                    System.out.println("\"" + currentFlight.getTypeFlight() + "\"");
                     setSortedFlightsDeparture.add(currentFlight);
                 }
             }
@@ -146,6 +148,7 @@ public class Airport {
      в указанное место.
      */
     public List<Flight> findListFlightsDepartureInNextCountHours(int countHours, String namePlaceForArrival) {
+        setSortedFlightsDeparture = new TreeSet<>();
         findFirstFlightToSpecifiedPlaceArrival(namePlaceForArrival);
         List<Flight> listFlightsDepartureInNextCountHours = new ArrayList<>();
         for (Flight flight : setSortedFlightsDeparture) {
