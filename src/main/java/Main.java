@@ -28,5 +28,13 @@ public class Main {
                 "\"Москва/ШРМ\", \"МОСКВА/ДМД\", \"Санкт-Петербург/Пулково\"): ");
         String namePlaceForArrival = new Scanner(System.in).nextLine();
         System.out.println(airport.findFirstFlightToSpecifiedPlaceArrival(namePlaceForArrival));
+
+        System.out.println("\nНапишите кол-во часов, в кот-е хотите улететь");
+        int hoursForDeparture = new Scanner(System.in).nextInt();
+        System.out.println("Напишите название точки прибытия,\n" +
+                "чтобы мы вернули ближайший прилет на неё\n(" +
+                "\"Москва/ШРМ\", \"МОСКВА/ДМД\", \"Санкт-Петербург/Пулково\"): ");
+        String namePlaceForArrivalWithHours = new Scanner(System.in).nextLine();
+        System.out.println(airport.findListFlightsDepartureInNextCountHours(hoursForDeparture, namePlaceForArrivalWithHours));
     }
 }

@@ -104,7 +104,7 @@ public class Flight implements Comparable<Flight> {
 
     @Override
     public int compareTo(Flight flight) {
-        return 0;
+        return this.getTimeDeparture().compareTo(flight.getTimeDeparture());
     }
 
     @Override

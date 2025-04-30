@@ -127,8 +127,8 @@ public class Airport {
             for (Flight currentFlight : currentLaneForAircraft.getListFlights()) {
                 if (((currentFlight.getTimeDeparture().isAfter(LocalDateTime.now())) ||
                         (currentFlight.getTimeDeparture().isEqual(LocalDateTime.now()))) &&
-                                (currentFlight.getTypeFlight().equals(TypeFlight.DEPARTURE)) &&
-                                    (currentFlight.getPlaceForArrival().equals(namePlaceForArrival))) {
+                        (currentFlight.getTypeFlight().equals(TypeFlight.DEPARTURE)) &&
+                        (currentFlight.getPlaceForArrival().equals(namePlaceForArrival))) {
                     setSortedFlightsDeparture.add(currentFlight);
                 }
             }
@@ -145,43 +145,53 @@ public class Airport {
      в ближайшее количество часов,
      в указанное место.
      */
-    public void findListFlightsDepartureInNextCountHours(int countHours) {
-
+    public List<Flight> findListFlightsDepartureInNextCountHours(int countHours, String namePlaceForArrival) {
+        findFirstFlightToSpecifiedPlaceArrival(namePlaceForArrival);
+        List<Flight> listFlightsDepartureInNextCountHours = new ArrayList<>();
+        for (Flight flight : setSortedFlightsDeparture) {
+            if ((flight.getTimeDeparture().isEqual(LocalDateTime.now()) ||
+                    (flight.getTimeDeparture().isAfter(LocalDateTime.now()))) &&
+                    (flight.getTimeDeparture().isEqual(LocalDateTime.now().plusHours(countHours)) ||
+                            (flight.getTimeDeparture().isBefore(LocalDateTime.now().plusHours(countHours))))) {
+                listFlightsDepartureInNextCountHours.add(flight);
+            }
+        }
+        return listFlightsDepartureInNextCountHours;
     }
 
-    public String getNameAirport() {
-        return nameAirport;
-    }
+        public String getNameAirport () {
+            return nameAirport;
+        }
 
-    public List<Aircraft> getListAircraft() {
-        return listAircraft;
-    }
+        public List<Aircraft> getListAircraft () {
+            return listAircraft;
+        }
 
-    public List<LaneForAircraft> getListLanesForAircraft() {
-        return listLanesForAircraft;
-    }
+        public List<LaneForAircraft> getListLanesForAircraft () {
+            return listLanesForAircraft;
+        }
 
-    public List<Flight> getListFlights() {
-        return listFlights;
-    }
+        public List<Flight> getListFlights () {
+            return listFlights;
+        }
 
-    public Map<String, Integer> getMapCountParkedAircraftByTerminalName() {
-        return mapCountParkedAircraftByTerminalName;
-    }
+        public Map<String, Integer> getMapCountParkedAircraftByTerminalName () {
+            return mapCountParkedAircraftByTerminalName;
+        }
 
-    public Set<Flight> getSetSortedFlightsDeparture() {
-        return setSortedFlightsDeparture;
-    }
+        public Set<Flight> getSetSortedFlightsDeparture () {
+            return setSortedFlightsDeparture;
+        }
 
-    @Override
-    public String toString() {
-        return "Airport{" +
-                "nameAirport='" + nameAirport + '\'' +
-                ", listAircraft=" + listAircraft +
-                ", listLanesForAircraft=" + listLanesForAircraft +
-                ", listFlights=" + listFlights +
-                ", mapCountParkedAircraftByTerminalName=" + mapCountParkedAircraftByTerminalName +
-                ", setSortedFlightsDeparture=" + setSortedFlightsDeparture +
-                '}';
+        @Override
+        public String toString () {
+            return "Airport{" +
+                    "nameAirport='" + nameAirport + '\'' +
+                    ", listAircraft=" + listAircraft +
+                    ", listLanesForAircraft=" + listLanesForAircraft +
+                    ", listFlights=" + listFlights +
+                    ", mapCountParkedAircraftByTerminalName=" + mapCountParkedAircraftByTerminalName +
+                    ", setSortedFlightsDeparture=" + setSortedFlightsDeparture +
+                    '}';
+        }
     }
-}
