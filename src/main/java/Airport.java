@@ -17,7 +17,7 @@ public class Airport {
         mapCountParkedAircraftByTerminalName = new TreeMap<>();
         listFlights = new ArrayList<>();
         setSortedFlightsDeparture = new TreeSet<>();
-        for (int i = 0; i < 160; i++) {
+        for (int i = 0; i < 360; i++) {
             createAircraft();
         }
         createFlight();
@@ -130,7 +130,6 @@ public class Airport {
                         (currentFlight.getTimeDeparture().isEqual(LocalDateTime.now()))) &&
                         (currentFlight.getTypeFlight().equals(TypeFlight.DEPARTURE)) &&
                         (currentFlight.getPlaceForArrival().equals(namePlaceForArrival))) {
-                    System.out.println("\"" + currentFlight.getTypeFlight() + "\"");
                     setSortedFlightsDeparture.add(currentFlight);
                 }
             }

@@ -109,15 +109,15 @@ public class Flight implements Comparable<Flight> {
 
     @Override
     public String toString() {
-        return "Flight{" +
-                "aircraft=" + aircraft +
-                ", typeFlight='" + typeFlight + '\'' +
-                ", timeDeparture=" + timeDeparture +
-                ", timeArrival=" + timeArrival +
-                ", numberFlight='" + numberFlight + '\'' +
-                ", placeForArrival='" + placeForArrival + '\'' +
-                ", status='" + status + '\'' +
-                ", exit=" + exit +
+        return "\n\nFlight{" +
+                "\naircraft=" + aircraft +
+                ",\ntypeFlight='" + typeFlight + '\'' +
+                ",\ntimeDeparture=" + timeDeparture +
+                ",\ntimeArrival=" + timeArrival +
+                ",\nnumberFlight='" + numberFlight + '\'' +
+                ",\nplaceForArrival='" + placeForArrival + '\'' +
+                ",\nstatus='" + status + '\'' +
+                ",\nexit=" + exit +
                 '}';
     }
 
