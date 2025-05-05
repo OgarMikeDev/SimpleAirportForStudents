@@ -49,30 +49,8 @@ public class Airport {
 
     public Flight createFlight() {
         Aircraft randomAircraft = createAircraft();
-        int randomNumberForTypeFlight = (int) (Math.random() * 2);
-        TypeFlight typeFlight = TypeFlight.values()[randomNumberForTypeFlight];
-        int randomHour = (int) (Math.random() * 24);
-        int randomMinute = (int) (Math.random() * 60);
-        LocalDate localDateNow = LocalDate.now();
-        LocalDateTime timeDeparture = LocalDateTime.of(
-                localDateNow.getYear(), localDateNow.getMonth(), localDateNow.getDayOfMonth(),
-                randomHour, randomMinute);
-        LocalDateTime timeArrival = timeDeparture.plusHours(2);
-        String[] randomNumbersFlights = {"SU-1177", "SU-2831", "SU-1133"};
-        String randomNumberFlight = randomNumbersFlights[(int) (Math.random() * 3)];
-        String[] randomPlacesForArrival = {"Москва/ШРМ", "МОСКВА/ДМД", "Санкт-Петербург/Пулково"};
-        String randomPlaceForArrival = randomPlacesForArrival[(int) (Math.random() * 3)];
-        String[] randomStatuses = {"Регистрация", "Регистрация закончена", "Задержан"};
-        String randomStatus = randomStatuses[(int) (Math.random() * 3)];
-        int randomExit = 1 + (int) (Math.random() * 30);
-        Flight randomFlight = new Flight(
-                randomAircraft, typeFlight,
-                timeDeparture, timeArrival,
-                randomNumberFlight, randomPlaceForArrival,
-                randomStatus, randomExit
-        );
-        listFlights.add(randomFlight);
-        return randomFlight;
+        //Ниже пишем код
+        return null;
     }
 
     public List<LaneForAircraft> createLanesForAircraft() {
@@ -124,20 +102,7 @@ public class Airport {
      */
     public Flight findFirstFlightToSpecifiedPlaceArrival(String namePlaceForArrival) {
         setSortedFlightsDeparture = new TreeSet<>();
-        for (LaneForAircraft currentLaneForAircraft : listLanesForAircraft) {
-            for (Flight currentFlight : currentLaneForAircraft.getListFlights()) {
-                if (((currentFlight.getTimeDeparture().isAfter(LocalDateTime.now())) ||
-                        (currentFlight.getTimeDeparture().isEqual(LocalDateTime.now()))) &&
-                        (currentFlight.getTypeFlight().equals(TypeFlight.DEPARTURE)) &&
-                        (currentFlight.getPlaceForArrival().equals(namePlaceForArrival))) {
-                    setSortedFlightsDeparture.add(currentFlight);
-                }
-            }
-        }
-
-        for (Flight currentFlight : setSortedFlightsDeparture) {
-            return currentFlight;
-        }
+        //Ниже пишем код
         return null;
     }
 
@@ -150,14 +115,7 @@ public class Airport {
         setSortedFlightsDeparture = new TreeSet<>();
         findFirstFlightToSpecifiedPlaceArrival(namePlaceForArrival);
         List<Flight> listFlightsDepartureInNextCountHours = new ArrayList<>();
-        for (Flight flight : setSortedFlightsDeparture) {
-            if ((flight.getTimeDeparture().isEqual(LocalDateTime.now()) ||
-                    (flight.getTimeDeparture().isAfter(LocalDateTime.now()))) &&
-                    (flight.getTimeDeparture().isEqual(LocalDateTime.now().plusHours(countHours)) ||
-                            (flight.getTimeDeparture().isBefore(LocalDateTime.now().plusHours(countHours))))) {
-                listFlightsDepartureInNextCountHours.add(flight);
-            }
-        }
+        //Ниже пишем код
         return listFlightsDepartureInNextCountHours;
     }
 
