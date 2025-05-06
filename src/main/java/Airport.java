@@ -49,8 +49,35 @@ public class Airport {
 
     public Flight createFlight() {
         Aircraft randomAircraft = createAircraft();
-        //Ниже пишем код
-        return null;
+        int randomNumberForTypeFlight = (int) (Math.random() * 2);
+        TypeFlight typeFlight = TypeFlight.values()[randomNumberForTypeFlight];
+        int randomHour = (int) (Math.random() * 24);
+        int randomMinute = (int) (Math.random() * 60);
+        LocalDate localDateNow = LocalDate.now();
+        LocalDateTime timeDeparture = LocalDateTime.of(
+                localDateNow.getYear(), localDateNow.getMonth(), localDateNow.getDayOfMonth(), randomHour, randomMinute);
+        LocalDateTime timeArrival = timeDeparture.plusHours(2);
+        String[] randomNumbersFlights = {"SU-1177", "SU-2831", "SU-1133"};
+        String randomNumberFlight = randomNumbersFlights[(int) (Math.random() * 3)];
+        String[] randomPlacesForArrival = {"Москва/ШРМ", "МОСКВА/ДМД", "Санкт-Петербург/Пулково"};
+        String randomPlaceForArrival = randomPlacesForArrival[(int) (Math.random() * 3)];
+        String[] randomStatuses = {"Регистрация", "Регистрация закончена", "Задержан"};
+        String randomStatus = randomStatuses[(int) (Math.random() * 3)];
+        int randomSizeExit = 1 + (int) (Math.random() * 2);
+        Integer[] arrayExit = new Integer[randomSizeExit];
+        int randomExit = 1 + (int) (Math.random() * 30);
+        arrayExit[0] = randomExit;
+        if (randomSizeExit == 2) {
+            arrayExit[1] = randomExit < 30 ? randomExit + 1 : randomExit - 1;
+        }
+        Flight randomFlight = new Flight(
+                randomAircraft, typeFlight,
+                timeDeparture, timeArrival,
+                randomNumberFlight, randomPlaceForArrival,
+                randomStatus, arrayExit
+        );
+        listFlights.add(randomFlight);
+        return randomFlight;
     }
 
     public List<LaneForAircraft> createLanesForAircraft() {
