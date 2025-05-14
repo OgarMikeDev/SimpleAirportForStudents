@@ -20,6 +20,10 @@ public class Airport {
         for (int i = 0; i < 360; i++) {
             createAircraft();
         }
+
+        for (int i = 0; i < 500; i++) {
+            createFlight();
+        }
         createFlight();
         createLanesForAircraft();
     }
@@ -48,8 +52,42 @@ public class Airport {
     }
 
     public Flight createFlight() {
-
-        return null;
+        Aircraft randomAircraft = createAircraft();
+        TypeFlight randomTypeFlight = TypeFlight.values()[(int) (Math.random() * 2)];
+        LocalDateTime randomTimeDeparture = LocalDateTime.of(
+                LocalDate.now().getYear(), LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth(),
+                ((int) (Math.random() * 24)), ((int) (Math.random() * 60))
+        );
+        LocalDateTime randomTimeArrival = randomTimeDeparture.plusHours(2 + (int) (Math.random() * 15));
+        String[] arrayNumberFlight = {"SU-1139", "SU-1529", "SU-1117"};
+        String randomNumberFlight = arrayNumberFlight[(int) (Math.random() * 3)];
+        String[] arrayPlaceForArrival = {"Москва/ШРМ", "МОСКВА/ДМД", "Санкт-Петербург/Пулково"};
+        String randomPlaceForArrival = arrayPlaceForArrival[(int) (Math.random() * 3)];
+        String[] arrayStatus = {
+                "Регистрация", "Посадка окончена", "Посадка",
+                "Регистрация закончена", "Задержан", "По расписанию"};
+        String randomStatus = arrayStatus[(int) (Math.random() * 6)];
+        int randomCountGates = 1 + (int) (Math.random() * 2);
+        Integer[] randomGates = new Integer[randomCountGates];
+        int randomValueGate = 1 + (int) (Math.random() * 30);
+        randomGates[0] = randomValueGate;
+        if (randomGates.length == 2) {
+            if (randomGates[0] == 30) {
+                int temp = randomGates[0];
+                randomGates[0] = randomGates[0] - 1;
+                randomGates[1] = temp;
+            } else if (randomGates[0] != 30) {
+                randomGates[1] = randomGates[0] + 1;
+            }
+        }
+        Flight randomFlight = new Flight(
+                randomAircraft, randomTypeFlight,
+                randomTimeDeparture, randomTimeArrival,
+                randomNumberFlight, randomPlaceForArrival,
+                randomStatus, randomGates
+        );
+        listFlights.add(randomFlight);
+        return randomFlight;
     }
 
     public List<LaneForAircraft> createLanesForAircraft() {
@@ -102,6 +140,18 @@ public class Airport {
     public Flight findFirstFlightToSpecifiedPlaceArrival(String namePlaceForArrival) {
         setSortedFlightsDeparture = new TreeSet<>();
         //Ниже пишем код
+        for (Flight currentFlight : listFlights) {
+            if (currentFlight.getTypeFlight().equals(TypeFlight.ARRIVAL) &&
+                    currentFlight.getTimeDeparture().isAfter(LocalDateTime.now().plusHours(3)) &&
+                        currentFlight.getPlaceForArrival().equals(namePlaceForArrival)) {
+                setSortedFlightsDeparture.add(currentFlight);
+            }
+        }
+
+
+        for (Flight flight : setSortedFlightsDeparture) {
+            return flight;
+        }
         return null;
     }
 
@@ -115,6 +165,13 @@ public class Airport {
         findFirstFlightToSpecifiedPlaceArrival(namePlaceForArrival);
         List<Flight> listFlightsDepartureInNextCountHours = new ArrayList<>();
         //Ниже пишем код
+        for (Flight currentFlight : listFlights) {
+            if (currentFlight.getPlaceForArrival().equals(namePlaceForArrival) &&
+                    currentFlight.getTimeDeparture().isAfter(LocalDateTime.now()) &&
+                        currentFlight.getTimeDeparture().isBefore(LocalDateTime.now().plusHours(countHours))) {
+                listFlightsDepartureInNextCountHours.add(currentFlight);
+            }
+        }
         return listFlightsDepartureInNextCountHours;
     }
 
